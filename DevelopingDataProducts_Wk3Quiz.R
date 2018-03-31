@@ -32,13 +32,25 @@ draft_pick_totals_long <- melt(draft_pick_totals,
 setDF(draft_pick_totals_long)
 
 #create plot
-p <- ggplot(draft_pick_totals_long, aes(x = Year, y = Selections, color = Position)) +
-        geom_point(alpha = .5) +
-        geom_smooth(se = TRUE, method = "loess", alpha = .1, size = .05) + 
+# p <- ggplot(draft_pick_totals_long, aes(x = Year, y = Selections, color = Position)) +
+#         geom_point(alpha = .5) +
+#         geom_smooth(se = TRUE, method = "loess", alpha = .1, size = .05) + 
+#         labs(title = "NFL Draft Selections by Position Over Time", 
+#              subtitle = "1995 - 2017", 
+#              ylab = "Number of Selections",
+#              caption= "Source: pro-football-reference.com")
+# 
+# #convert to interactive plotly version 
+# ggplotly(p) %>% animation_opts(frame=1000,transition=600,redraw=T)  
+
+## Attempt 2
+p2 <- ggplot(draft_pick_totals_long) +
+        geom_line(aes(x = Year, y = Selections, color = Position)) +
+        stat_smooth(aes(x = Year, y = Selections, color = Position), method = loess) +
         labs(title = "NFL Draft Selections by Position Over Time", 
              subtitle = "1995 - 2017", 
              ylab = "Number of Selections",
              caption= "Source: pro-football-reference.com")
 
-#convert to interactive plotly version 
-ggplotly(p) %>% animation_opts(frame=1000,transition=600,redraw=T)  
+# convert to interactive plotly version 
+ggplotly(p2) %>% animation_opts(frame=1000,transition=600,redraw=T)  
